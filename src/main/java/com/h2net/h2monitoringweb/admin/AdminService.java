@@ -11,6 +11,7 @@ import java.util.Map;
 public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
+
     public List<Map<String, Object>> noAuthUserList(){
         return adminMapper.selectNoAuthUser();
     }

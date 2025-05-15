@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h2net.h2monitoringweb.mapper.MonitorMapper">
+    <select id="getPlcData" resultType="Map">
+        SELECT   data_1
+                ,data_2
+                ,data_3
+                ,data_4
+                ,data_5
+                ,data_6
+                ,data_7
+                ,data_8
+                ,data_9
+                ,data_10
+                ,data_11
+                ,data_12
+                ,data_13
+                ,data_14
+                ,data_15
+        FROM h2_plc_data
+        ORDER BY received_at DESC
+        LIMIT 1;
+    </select>
+</mapper>
