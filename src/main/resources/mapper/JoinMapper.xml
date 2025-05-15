@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h2net.h2monitoringweb.mapper.JoinMapper">
+    <select id="selectUserId" parameterType="string" resultType="int">
+        SELECT count(id)
+        FROM h2_user
+        WHERE id = #{userId}
+    </select>
 
-</beans>
+    <insert id="insertUser" parameterType="com.h2net.h2monitoringweb.join.JoinVo">
+        INSERT INTO h2_user
+        ( id
+        , password
+        , name
+        , email
+        , organization
+        , phone
+        , auth
+        , reg_date
+        )
+        VALUES( #{userId}
+              , #{userPw}
+              , #{userNm}
+              , #{email}
+              , #{organization}
+              , #{phone}
+              , '99'
+              , now()
+              )
+    </insert>
+
+</mapper>

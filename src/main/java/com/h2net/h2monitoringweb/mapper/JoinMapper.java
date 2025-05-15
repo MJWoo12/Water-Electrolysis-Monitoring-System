@@ -1,12 +1,13 @@
-package com.h2net.h2mornitoringweb.mapper;
+package com.h2net.h2monitoringweb.mapper;
 
+import com.h2net.h2monitoringweb.join.JoinVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
 
 @Mapper
 public interface JoinMapper {
-    boolean selectUserId(String userId);
+    int selectUserId(String userId);
 
-    int insertUser(Map<String, Object> userInfo);
+    int insertUser(JoinVo userInfo);
 }

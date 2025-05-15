@@ -1,4 +1,4 @@
-package com.h2net.h2mornitoringweb.join;
+package com.h2net.h2monitoringweb.join;
 
 import lombok.Data;
 

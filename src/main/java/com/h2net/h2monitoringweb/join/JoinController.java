@@ -1,4 +1,4 @@
-package com.h2net.h2mornitoringweb.join;
+package com.h2net.h2monitoringweb.join;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/join")
+@RequestMapping("/api/join")
 public class JoinController {
     @Autowired
     private JoinService joinService;
@@ -17,8 +17,8 @@ public class JoinController {
     public ResponseEntity<String> checkUsedId (@PathVariable String userId) {
         try{
             boolean checkId = joinService.checkUsedId(userId);
-            if(checkId) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("중복된 아이디입니다.");
+            if(!checkId) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("중복된 아이디입니다.");
             } else{
                 return ResponseEntity.status(HttpStatus.OK).body("사용 가능한 아이디입니다.");
             }
@@ -28,9 +28,9 @@ public class JoinController {
     }
 
     @PostMapping("/insertUser")
-    public ResponseEntity<String> insertUser (@RequestBody JoinVo joinVo) throws Exception{
+    public ResponseEntity<String> insertUser (@RequestBody JoinVo vo) throws Exception{
         try{
-            boolean success = joinService.insertUser(joinVo);
+            boolean success = joinService.insertUser(vo);
             if (success) {
                 return ResponseEntity.status(HttpStatus.OK).body("가입 성공");
             } else {

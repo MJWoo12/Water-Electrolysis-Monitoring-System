@@ -1,20 +1,55 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <html>
 <head>
     <title>Title</title>
     <style>
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-            background-image: url('../webapp/images/watersection.png'); /* PNG 파일 경로 */
-            background-size: cover; /* 화면에 꽉 채우기 */
-            background-position: center; /* 가운데 정렬 */
-            background-repeat: no-repeat; /* 반복 안 함 */
-            height: 100vh; /* 뷰포트 높이에 맞추기 */
+            overflow: auto;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        img.background {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: -45px;
+            right: 130px;
+            z-index: 10;
+        }
+
+        .button-container button {
+            margin: 0px 20px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button-container button:hover {
+            background-color: #aaa;
         }
     </style>
 </head>
 <body>
-
+    <div class="content">
+        <img src="../../../images/waterSection.png" style="width:100vw; height:100vh; object-fit:cover;">
+        <div class="button-container">
+            <button onclick="location.href='/monitor/wet'">WET H2 Section</button>
+            <button onclick="location.href='/monitor/dry'">DRY H2 & VENT Section</button>
+        </div>
+    </div>
 </body>
 </html>

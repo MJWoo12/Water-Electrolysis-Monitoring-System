@@ -1,32 +1,38 @@
-package com.h2net.h2mornitoringweb.join;
+package com.h2net.h2monitoringweb.join;
 
-import com.h2net.h2mornitoringweb.mapper.JoinMapper;
+import com.h2net.h2monitoringweb.mapper.JoinMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class JoinService {
     @Autowired
     private JoinMapper joinMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public boolean checkUsedId (String userId){
-        return joinMapper.selectUserId(userId);
+        int selectUser = joinMapper.selectUserId(userId);
+        return selectUser == 0;
     }
 
-    public boolean insertUser(JoinVo joinVo){
-        Map<String, Object> userInfo = new HashMap<>();
-
-        userInfo.put("userId", joinVo.getUserId());
-        userInfo.put("userPw", joinVo.getUserPw());
-        userInfo.put("userNm", joinVo.getUserNm());
-        userInfo.put("email", joinVo.getEmail());
-        userInfo.put("organization", joinVo.getOrganization());
-        userInfo.put("phone", joinVo.getPhone());
-
-        int insertUser = joinMapper.insertUser(userInfo);
-        return insertUser > 0;
+    @Transactional
+    public boolean insertUser(JoinVo vo){
+        int selectUser = joinMapper.selectUserId(vo.getUserId());
+        if(selectUser == 0){
+            return false;
+        }
+        try{
+            String encPw = passwordEncoder.encode(vo.getUserPw());
+            vo.setUserPw(encPw);
+            int insertUser = joinMapper.insertUser(vo);
+            return insertUser > 0;
+        }catch (Exception e){
+            return false;
+        }
     }
 }
