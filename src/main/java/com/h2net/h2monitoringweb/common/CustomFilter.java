@@ -1,6 +1,8 @@
 package com.h2net.h2monitoringweb.common;
 
 import com.h2net.h2monitoringweb.login.LoginService;
+import lombok.Setter;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@Setter
 public class CustomFilter implements Filter {
     private static final List<String> EXCLUDED_URLS = Arrays.asList(
             "^/$",
@@ -31,9 +34,7 @@ public class CustomFilter implements Filter {
     );
 
     private LoginService loginService;
-    public void setLoginService(LoginService loginService) {
-        this.loginService = loginService;
-    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         // 필터 초기화 작업 (필요 시)
@@ -48,7 +49,7 @@ public class CustomFilter implements Filter {
         String requestURI = httpRequest.getRequestURI();
 
         // 제외할 경로인지 확인 (로그인 페이지, CSS, JS 등)
-        boolean isExcluded = EXCLUDED_URLS.stream().anyMatch(excluded -> requestURI.matches(excluded));
+        boolean isExcluded = EXCLUDED_URLS.stream().anyMatch(requestURI::matches);
 
         // 제외할 경로이거나 이미 인증된 경우 필터 통과
         if (isExcluded) {
@@ -90,7 +91,7 @@ public class CustomFilter implements Filter {
                         httpResponse.getWriter().write("icon: 'error',");
                         httpResponse.getWriter().write("title: '권한이 없습니다.'");
                         httpResponse.getWriter().write("}).then(() => {");
-                        httpResponse.getWriter().write("window.location.href = '/monitor/water';");
+                        httpResponse.getWriter().write("window.location.href = '/monitor';");
                         httpResponse.getWriter().write("});");
                         httpResponse.getWriter().write("</script>");
                         httpResponse.getWriter().write("</body></html>");

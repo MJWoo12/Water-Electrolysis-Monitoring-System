@@ -23,6 +23,10 @@ public class LoginService {
         tokenStore.put(token, userId);
     }
 
+    public String getUserIdByToken(String token) {
+        return tokenStore.get(token);
+    }
+
     public Map<String, Object> loginCheck (LoginVO vo){
         try {
             Map<String, Object> response = new HashMap<>();

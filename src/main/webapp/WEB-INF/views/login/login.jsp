@@ -171,7 +171,7 @@
                       text: '관리자에게 문의 후 로그인하세요.'
                   })
                 } else if(data.user.auth === "01" || data.user.auth === "02"){
-                    window.location.href = '/monitor/water';
+                    window.location.href = '/monitor';
                 } else
                     Swal.fire({
                         icon: 'error',

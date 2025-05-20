@@ -77,7 +77,7 @@
 
     document.getElementById('btnBack').addEventListener('click', function(event) {
         event.preventDefault();
-        window.location.href = "/monitor/water"
+        window.location.href = "/monitor"
 
     });
     function loadUserList() {

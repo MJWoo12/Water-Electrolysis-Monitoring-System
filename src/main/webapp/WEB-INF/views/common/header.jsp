@@ -10,7 +10,7 @@
   %>
   <div class="header">
     <div class="logo">
-      <a href="/monitor/water">
+      <a href="/monitor">
         <img src="/icon/logoImage.png" alt="Logo" class="logo-img">
       </a>
     </div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.h2net.h2monitoringweb.mapper.MonitorMapper">
-    <select id="getPlcData" resultType="Map">
+    <select id="getWaterPlcData" resultType="Map">
         SELECT   data_1
                 ,data_2
                 ,data_3
@@ -17,8 +17,127 @@
                 ,data_13
                 ,data_14
                 ,data_15
+                ,data_16
         FROM h2_plc_data
         ORDER BY received_at DESC
         LIMIT 1;
+    </select>
+    <select id="getWetPlcData" resultType="Map">
+        SELECT data_20
+             ,data_21
+             ,data_22
+             ,data_23
+             ,data_24
+             ,data_25
+             ,data_26
+             ,data_27
+             ,data_28
+             ,data_29
+        FROM h2_plc_data
+        ORDER BY received_at DESC
+            LIMIT 1;
+    </select>
+    <select id="getDryPlcData" resultType="Map">
+        SELECT data_30
+             ,data_31
+             ,data_32
+             ,data_33
+             ,data_34
+             ,data_35
+             ,data_36
+             ,data_37
+             ,data_38
+             ,data_39
+             ,data_40
+             ,data_41
+             ,data_42
+             ,data_43
+             ,data_44
+             ,data_45
+             ,data_46
+             ,data_47
+        FROM h2_plc_data
+        ORDER BY received_at DESC
+            LIMIT 1;
+    </select>
+
+    <select id="getDashboardPlcData" resultType="com.h2net.h2monitoringweb.monitor.MonitorVO">
+        SELECT 		  received_at
+             ,data_1
+             ,data_2
+             ,data_3
+             ,data_4
+             ,data_5
+             ,data_6
+             ,data_7
+             ,data_8
+             ,data_9
+             ,data_10
+             ,data_11
+             ,data_12
+             ,data_13
+             ,data_14
+             ,data_15
+             ,data_16
+             ,data_17
+             ,data_18
+             ,data_19
+             ,data_20
+             ,data_21
+             ,data_22
+             ,data_23
+             ,data_24
+             ,data_25
+             ,data_26
+             ,data_27
+             ,data_28
+             ,data_29
+             ,data_30
+        FROM (
+                 select received_at
+                      ,data_1
+                      ,data_2
+                      ,data_3
+                      ,data_4
+                      ,data_5
+                      ,data_6
+                      ,data_7
+                      ,data_8
+                      ,data_9
+                      ,data_10
+                      ,data_11
+                      ,data_12
+                      ,data_13
+                      ,data_14
+                      ,data_15
+                      ,data_16
+                      ,data_17
+                      ,data_18
+                      ,data_19
+                      ,data_20
+                      ,data_21
+                      ,data_22
+                      ,data_23
+                      ,data_24
+                      ,data_25
+                      ,data_26
+                      ,data_27
+                      ,data_28
+                      ,data_29
+                      ,data_30, ROW_NUMBER() OVER (
+        PARTITION BY TO_CHAR(received_at, 'YYYY-MM-DD')
+        ORDER BY received_at DESC
+    ) AS rn
+                 FROM h2_plc_data
+             ) sub
+        WHERE rn = 1
+        ORDER BY received_at DESC
+            LIMIT 10;
+    </select>
+
+    <select id="selectMyInfo" parameterType="com.h2net.h2monitoringweb.login.LoginVO" resultType="com.h2net.h2monitoringweb.login.LoginVO">
+        SELECT *
+        FROM h2_user
+        WHERE id = #{userId}
     </select>
 </mapper>
